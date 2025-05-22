@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User'; 
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/habitquest'); // replace if using env vars
+mongoose.connect('mongodb://127.0.0.1:27017/habitquest'); 
 
 const seedUsers = async () => {
   try {
