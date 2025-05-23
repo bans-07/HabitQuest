@@ -1,5 +1,7 @@
 // Entry point for Express/GraphQL server setup
 import express from 'express';
+import './connection';
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
