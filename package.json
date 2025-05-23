@@ -4,7 +4,7 @@
   "description": "A MERN stack single-page application for habit tracking and mindfulness.",
   "main": "server/server.ts",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "cd server && npm run start",
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "server": "ts-node-dev --respawn --transpile-only server/server.ts",
     "client": "npm --prefix client run dev",

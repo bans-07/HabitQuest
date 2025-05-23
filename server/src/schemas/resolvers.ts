@@ -1,8 +1,8 @@
-import { AuthenticationError } from '../src/utils/auth';
-import User from '../src/models/User';
-import Challenge from '../src/models/Challenge';
-import Badge from '../src/models/Badge';
-import { signToken } from '../src/utils/auth';
+import { AuthenticationError } from '../utils/auth.js';
+import User from '../models/User.js';
+import Challenge from '../models/Challenge.js';
+import Badge from '../models/Badge.js';
+import { signToken } from '../utils/auth.js';
 
 const resolvers = {
   Query: {
