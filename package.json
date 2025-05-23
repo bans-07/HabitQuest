@@ -10,7 +10,7 @@
     "client": "npm --prefix client run dev",
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "build-server": "tsc -p server",
-    "build-client": "npm --prefix client run build"
+    "build-client": "cd client && npm run build"
   },
   "author": "",
   "license": "MIT",
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.21",
+    "@types/express": "^4.17.22",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.5.9",
     "@types/react": "^19.1.4",
