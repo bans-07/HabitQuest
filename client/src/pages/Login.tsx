@@ -1,58 +1,59 @@
 import React, { useState } from 'react';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-    if (email === '' || password === '') {
+    if (username.trim() === '' || password.trim() === '') {
       alert('Please fill out both fields.');
       return;
     }
 
-    console.log('Login try:');
-    console.log('Email:', email);
+    console.log('Login attempt:');
+    console.log('Username:', username);
     console.log('Password:', password);
 
-    // TODO: Add fetch request to your login API endpoint
+    // TODO: Connect with backend for login
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={styles.container}>
       <h2>Login</h2>
-      <form id="login-form" onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label htmlFor="email">Email</label>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <div style={styles.inputGroup}>
+          <label htmlFor="username">Username</label>
           <input
-            type="email"
-            id="email"
-            name="email"
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={styles.input}
             required
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="input-group">
+        <div style={styles.inputGroup}>
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
-            required
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={styles.input}
+            required
           />
         </div>
-        <button type="submit" className="btn" name="login-submit">
+        <button type="submit" style={styles.button}>
           Login
         </button>
       </form>
-
-      <div className="signup">
+      <div style={styles.signup}>
         Don't have an account yet? <a href="/signup">Sign Up Here</a>
       </div>
     </div>
@@ -61,3 +62,40 @@ const Login: React.FC = () => {
 
 export default Login;
 
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    maxWidth: '400px',
+    margin: '50px auto',
+    padding: '2rem',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    textAlign: 'center',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+  },
+  inputGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'left',
+  },
+  input: {
+    padding: '0.5rem',
+    fontSize: '1rem',
+    marginTop: '0.25rem',
+  },
+  button: {
+    padding: '0.75rem',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    backgroundColor: '#0077cc',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+  },
+  signup: {
+    marginTop: '1rem',
+  },
+};
