@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "target": "es2016",
     "module": "commonjs",
     "rootDir": "./src",
@@ -15,3 +16,30 @@
 
 
 
+=======
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "useUnknownInCatchVariables": true
+  },
+  "exclude": [
+    "server/dist",
+    "client/dist", 
+    "client/eslint.config.js"
+  ]
+}
+>>>>>>> 70c879aefb0b4e42d4202157c5ddae7090985494

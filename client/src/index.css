@@ -1,0 +1,60 @@
+/* Override primary Bootstrap colors */
+:root {
+  --bs-primary: #3b9f9f;   /* teal */
+  --bs-secondary: #6c757d; /* default Bootstrap gray */
+  --bs-success: #4caf50;   /* green */
+  --bs-info: #5bc0de;      /* light teal/blue */
+  --bs-warning: #ffc107;   /* keep default or adjust if needed */
+  --bs-danger: #dc3545;    /* keep default or adjust if needed */
+  --bs-light: #f8f9fa;
+  --bs-dark: #343a40;
+
+  /* Optional custom background and text colors */
+  --custom-bg: #f0f4f8; /* light grey-blue */
+  --custom-text: #1f2d3d; /* dark muted blue */
+}
+
+/* Apply to body or specific layout containers */
+body {
+  background-color: var(--custom-bg);
+  color: var(--custom-text);
+}
+
+/* Override Bootstrap button colors */
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-success {
+  background-color: var(--bs-success);
+  border-color: var(--bs-success);
+}
+
+.btn-info {
+  background-color: var(--bs-info);
+  border-color: var(--bs-info);
+}
+
+/* Optional: Nav overrides if you're using SB Admin 2 navbar/sidebar */
+.sidebar {
+  background-color: #2c3e50 !important; /* deep grey-blue */
+}
+
+.sidebar .nav-link {
+  color: #d1ecf1 !important;
+}
+
+.sidebar .nav-link.active {
+  background-color: var(--bs-primary) !important;
+  color: white !important;
+}
+
+.navbar {
+  background-color: var(--bs-primary) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: white !important;
+}

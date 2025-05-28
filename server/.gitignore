@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -136,6 +135,3 @@ dist
 cypress/videos
 cypress/screenshots
 cypress/reports
-=======
-node_modules
->>>>>>> 70c879aefb0b4e42d4202157c5ddae7090985494
