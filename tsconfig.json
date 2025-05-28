@@ -1,5 +1,22 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
+    "target": "es2016",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
+
+
+
+
+=======
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -25,3 +42,4 @@
     "client/eslint.config.js"
   ]
 }
+>>>>>>> 70c879aefb0b4e42d4202157c5ddae7090985494
