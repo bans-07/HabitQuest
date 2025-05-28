@@ -10,7 +10,8 @@
     "client": "npm --prefix client run dev",
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "build-server": "tsc -p server",
-    "build-client": "npm --prefix client run build"
+    "build-client": "npm --prefix client run build",
+    "postinstall": "npm install --prefix client && npm install --prefix server"
   },
   "author": "",
   "license": "MIT",
