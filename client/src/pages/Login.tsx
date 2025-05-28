@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate(); 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -16,45 +17,48 @@ const Login: React.FC = () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    // TODO: Connect with backend for login
+    
+    navigate('/dashboard');
   };
 
   return (
-    <div className="login-container" style={styles.container}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.inputGroup}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter your username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-            required
-          />
+    <div style={styles.pageContainer}>
+      <h1 style={styles.title}>Habit Quest</h1> 
+      <div className="login-container" style={styles.container}>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+              required
+            />
+          </div>
+          <button type="submit" style={styles.button}>
+            Login
+          </button>
+        </form>
+        <div style={styles.signup}>
+          Don't have an account yet? <a href="/signup">Sign Up Here</a>
         </div>
-        <div style={styles.inputGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
-        </div>
-        <button type="submit" style={styles.button}>
-          Login
-        </button>
-      </form>
-      <div style={styles.signup}>
-        Don't have an account yet? <a href="/signup">Sign Up Here</a>
       </div>
     </div>
   );
@@ -63,13 +67,22 @@ const Login: React.FC = () => {
 export default Login;
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
+  pageContainer: {
     maxWidth: '400px',
-    margin: '50px auto',
+    margin: '40px auto',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif',
+  },
+  title: {
+    fontSize: '3rem',
+    color: '#0077cc',
+    fontWeight: 'bold',
+    marginBottom: '1.5rem',
+  },
+  container: {
     padding: '2rem',
     border: '1px solid #ccc',
     borderRadius: '8px',
-    textAlign: 'center',
   },
   form: {
     display: 'flex',
@@ -85,6 +98,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: '0.5rem',
     fontSize: '1rem',
     marginTop: '0.25rem',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
   },
   button: {
     padding: '0.75rem',
