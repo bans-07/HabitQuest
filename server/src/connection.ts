@@ -2,9 +2,12 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-dotenv.config();
+// Explicitly load the .env file from the server directory
+dotenv.config({ path: __dirname + '/../.env' });
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
+
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
 
 mongoose.connect(MONGODB_URI);
 

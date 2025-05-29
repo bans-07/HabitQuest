@@ -1,45 +1,17 @@
 {
-<<<<<<< HEAD
-  "name": "server",
-  "version": "1.0.0",
-  "main": "src/server.ts",
-  "scripts": {
-    "dev": "nodemon --watch src --ext ts,json --exec ts-node src/server.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "apollo-server-express": "^3.13.0",
-    "bcrypt": "^6.0.0",
-    "dotenv": "^16.5.0",
-    "express": "^4.21.2",
-    "graphql": "^16.11.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.15.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^20.1.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
-=======
   "name": "habitquest",
   "version": "1.0.0",
   "description": "A MERN stack single-page application for habit tracking and mindfulness.",
   "main": "server/server.ts",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/dist/server.js",
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "server": "ts-node-dev --respawn --transpile-only server/server.ts",
     "client": "npm --prefix client run dev",
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "build-server": "tsc -p server",
     "build-client": "npm --prefix client run build",
-    "postinstall": "npm install --prefix client && npm install --prefix server"
+    "install-all": "npm install --prefix client && npm install --prefix server"
   },
   "author": "",
   "license": "MIT",
@@ -69,6 +41,5 @@
     "concurrently": "^8.2.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
->>>>>>> 70c879aefb0b4e42d4202157c5ddae7090985494
   }
 }
