@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const quotes = [
+  "Stay consistent. Results will follow.",
+  "Every habit starts with a decision.",
+  "You are what you repeatedly do.",
+  "Progress, not perfection.",
+  "The journey begins with one step.",
+];
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [quoteIndex, setQuoteIndex] = useState(0);
   const navigate = useNavigate();
 
-  const quotes = [
-    "Stay focused and never give up.",
-    "Consistency is key to success.",
-    "Every step counts on your journey.",
-    "Small habits create big changes.",
-    "Believe in yourself and all that you are."
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +39,16 @@ const Login: React.FC = () => {
 
   return (
     <div style={styles.pageWrapper}>
+      {/* Inline animation styles */}
+      <style>
+        {`
+          @keyframes scrollText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+          }
+        `}
+      </style>
+
       <div style={styles.container}>
         <h1 style={styles.title}>Habit Quest</h1>
         <form onSubmit={handleSubmit} style={styles.form}>
@@ -48,48 +66,21 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             style={styles.input}
           />
-          <button type="submit" style={styles.button}>
-            Login
-          </button>
+          <button type="submit" style={styles.button}>Login</button>
         </form>
         <p style={styles.switchText}>
-          Don't have an account?{' '}
-          <a href="/signup" style={styles.link}>
-            Sign up here
-          </a>
+          Don&apos;t have an account?{' '}
+          <a href="/signup" style={styles.link}>Sign up here</a>
         </p>
       </div>
 
-      <div style={styles.marqueeContainer}>
-        <div style={styles.marquee}>
-          {quotes.map((quote, idx) => (
-            <span
-              key={idx}
-              style={{
-                marginRight: idx === quotes.length - 1 ? '6rem' : '3rem',
-                fontWeight: '700',
-              }}
-            >
-              {quote}
-            </span>
-          ))}
-        </div>
+      <div style={styles.quoteBanner}>
+        <p style={styles.quoteText}>{quotes[quoteIndex]}</p>
       </div>
 
       <footer style={styles.footer}>
         <p>© 2025 Habit Quest. Project 3 - Group 08. All rights reserved.</p>
       </footer>
-
-      <style>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-      `}</style>
     </div>
   );
 };
@@ -104,7 +95,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#333',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'center',
     padding: '40px 20px',
   },
@@ -116,6 +106,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: 12,
     boxShadow: '0 2px 12px rgba(0,0,0,0.1)',
     textAlign: 'center',
+    zIndex: 2,
   },
   title: {
     fontSize: '2rem',
@@ -136,7 +127,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: 6,
     border: '1px solid #ccc',
     boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
-    transition: 'border-color 0.3s ease',
   },
   button: {
     padding: '12px 0',
@@ -146,7 +136,6 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: 'none',
     borderRadius: 6,
     cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
   },
   switchText: {
     marginTop: 16,
@@ -158,29 +147,32 @@ const styles: { [key: string]: React.CSSProperties } = {
     textDecoration: 'none',
     fontWeight: 600,
   },
-  marqueeContainer: {
-    width: '100vw',
-    overflow: 'hidden',
-    padding: '10px 20px',
-    boxSizing: 'border-box',
-    marginTop: 30,
+  quoteBanner: {
+    marginTop: 40,
     marginBottom: 20,
-  },
-  marquee: {
-    display: 'flex',
+    width: '100%',
+    maxWidth: 600,
+    overflow: 'hidden',
     whiteSpace: 'nowrap',
-    animation: 'marquee 25s linear infinite',
-    fontWeight: '700',
-    fontSize: '1rem',
-    color: '#0077cc',
+    borderTop: '1px solid #ccc',
+    borderBottom: '1px solid #ccc',
+    padding: '10px 0',
+    fontWeight: 'bold',
+    fontSize: '1.1rem',
+    textAlign: 'center',
+  },
+  quoteText: {
+    display: 'inline-block',
+    animation: 'scrollText 10s linear infinite',
+    paddingLeft: '100%',
+    whiteSpace: 'nowrap',
   },
   footer: {
+    marginTop: 'auto',
     textAlign: 'center',
     padding: '1rem 0',
     fontSize: 14,
     color: '#999',
-    borderTop: '1px solid #eee',
-    marginTop: 32,
     width: '100%',
     maxWidth: 400,
   },
