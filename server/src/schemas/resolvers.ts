@@ -1,12 +1,12 @@
-import { AuthenticationError } from '../utils/auth';
-import User from '../models/User';
-import Challenge from '../models/Challenge';
-import Badge from '../models/Badge';
-import { signToken } from '../utils/auth';
+import { AuthenticationError } from '../utils/auth.js';
+import User from '../models/User.js';
+import Challenge from '../models/Challenge.js';
+import Badge from '../models/Badge.js';
+import { signToken } from '../utils/auth.js';
 
 const resolvers = {
   Query: {
-    me: async (_parent, _args, context) => {
+    me: async (_parent: any, _args: any, context: any) => {
       if (context.user) {
         return User.findById(context.user._id)
           .populate('completedChallenges')
@@ -17,7 +17,7 @@ const resolvers = {
     users: async () => {
       return User.find().populate('completedChallenges').populate('badges');
     },
-    user: async (_parent, { username }) => {
+    user: async (_parent: any, { username }: any) => {
       return User.findOne({ username }).populate('completedChallenges').populate('badges');
     },
     challenges: async () => {
@@ -29,7 +29,7 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (_parent, { username, password }) => {
+    login: async (_parent: any, { username, password }: any) => {
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -45,23 +45,24 @@ const resolvers = {
       return { token, user };
     },
 
-    addUser: async (_parent, args) => {
+    addUser: async (_parent: any, args: any) => {
       const user = await User.create(args);
       const token = signToken(user);
       return { token, user };
     },
 
-    completeChallenge: async (_parent, { challengeId }, context) => {
+    completeChallenge: async (_parent: any, { challengeId }: any, context: any) => {
       if (!context.user) throw new AuthenticationError();
 
       const user = await User.findById(context.user._id);
+      if (!user) throw new AuthenticationError('User not found');
 
-      if (!user?.completedChallenges.includes(challengeId)) {
+      if (user && !user?.completedChallenges.includes(challengeId)) {
         user.completedChallenges.push(challengeId);
         await user.save();
       }
 
-      return user.populate('completedChallenges').populate('badges');
+      return await user.populate({ path: 'completedChallenges' }).populate({ path: 'badges' });
     },
   },
 };

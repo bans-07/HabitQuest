@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/api/authapi.tsx","./src/api/userapi.tsx","./src/components/taskboard.tsx","./src/components/timeblockcalender.tsx","./src/pages/dashboard.tsx","./src/pages/login.tsx","./src/pages/signup.tsx","./src/utils/mutations.ts","./src/utils/queries.ts"],"errors":true,"version":"5.8.3"}
