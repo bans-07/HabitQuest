@@ -1,17 +1,14 @@
 import express from 'express';
-<<<<<<< HEAD
 import './connection';
 import dotenv from 'dotenv';
 dotenv.config();
 
-=======
 import path from 'node:path';
 import type { Request, Response } from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authMiddleware } from './utils/auth.js';
->>>>>>> origin/main
 
 const server = new ApolloServer({
   typeDefs,
@@ -35,10 +32,11 @@ const startApolloServer = async () => {
   ));
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+// Go up two levels from server/dist to project root, then into client/dist
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
 
     app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
     });
   }
 

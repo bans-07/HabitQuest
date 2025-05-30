@@ -2,6 +2,13 @@ import jwt from 'jsonwebtoken';
 import { Request } from 'express';
 import { IUser } from '../models/User'; 
 
+// Extend Express Request interface to include 'user'
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: IUser;
+  }
+}
+
 const secret = process.env.JWT_SECRET || 'supersecretkey';
 const expiration = '2h';
 
