@@ -1,69 +1,110 @@
-import { AuthenticationError } from '../utils/auth';
-import User from '../models/User';
-import Challenge from '../models/Challenge';
-import Badge from '../models/Badge';
-import { signToken } from '../utils/auth';
+import type { IUserContext } from '../interfaces/UserContext';
+import type { IUserDocument } from '../interfaces/UserDocument';
+import type { IChallenge } from '../interfaces/Challenge';
+import type { IBadge } from '../interfaces/Badge';
+import { User, Challenge, Badge } from '../models';
+import { signToken, AuthenticationError } from '../utils/auth';
+import { Types } from 'mongoose';
 
 const resolvers = {
   Query: {
-    me: async (_parent, _args, context) => {
-      if (context.user) {
-        return User.findById(context.user._id)
-          .populate('completedChallenges')
-          .populate('badges');
-      }
-      throw new AuthenticationError();
-    },
-    users: async () => {
-      return User.find().populate('completedChallenges').populate('badges');
-    },
-    user: async (_parent, { username }) => {
-      return User.findOne({ username }).populate('completedChallenges').populate('badges');
-    },
-    challenges: async () => {
-      return Challenge.find();
-    },
-    badges: async () => {
-      return Badge.find();
-    },
-  },
+    me: async (
+      _parent: unknown,
+      _args: unknown,
+      context: IUserContext
+    ): Promise<IUserDocument | null> => {
+      if (!context.user) throw new AuthenticationError('User not authenticated');
 
+      const user = await User.findById(context.user._id)
+        .populate('completedChallenges')
+        .populate('badges')
+        .exec();
+
+     
+      return user as IUserDocument | null;
+    },
+
+    users: async (): Promise<IUserDocument[]> => {
+      const users = await User.find()
+        .populate('completedChallenges')
+        .populate('badges')
+        .exec();
+
+      return users as unknown as IUserDocument[];
+    },
+
+    user: async (
+      _parent: unknown,
+      { username }: { username: string }
+    ): Promise<IUserDocument | null> => {
+      const user = await User.findOne({ username })
+        .populate('completedChallenges')
+        .populate('badges')
+        .exec();
+
+      return user as IUserDocument | null;
+    },
+
+    challenges: async (): Promise<IChallenge[]> => {
+      const challenges = await Challenge.find().exec();
+      return challenges as unknown as IChallenge[];
+    },
+    
+    badges: async (): Promise<IBadge[]> => {
+      const badges = await Badge.find().exec();
+      return badges as unknown as IBadge[];
+    },
+    
   Mutation: {
-    login: async (_parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (
+      _parent: unknown,
+      { username, password }: { username: string; password: string }
+    ): Promise<{ token: string; user: IUserDocument }> => {
+      const user = await User.findOne({ username }).exec();
 
-      if (!user) {
-        throw new AuthenticationError('No user found with this username');
-      }
-
-      const valid = await user.isCorrectPassword(password);
-      if (!valid) {
-        throw new AuthenticationError('Incorrect credentials');
+      if (!user || !(await user.isCorrectPassword(password))) {
+        throw new AuthenticationError('Invalid credentials');
       }
 
       const token = signToken(user);
-      return { token, user };
+
+      return { token, user: user as unknown as IUserDocument };
     },
 
-    addUser: async (_parent, args) => {
+    addUser: async (
+      _parent: unknown,
+      args: Partial<IUserDocument>
+    ): Promise<{ token: string; user: IUserDocument }> => {
       const user = await User.create(args);
       const token = signToken(user);
-      return { token, user };
+      return { token, user: user as unknown as IUserDocument };
     },
 
-    completeChallenge: async (_parent, { challengeId }, context) => {
-      if (!context.user) throw new AuthenticationError();
+    completeChallenge: async (
+      _parent: unknown,
+      { challengeId }: { challengeId: string },
+      context: IUserContext
+    ): Promise<IUserDocument | null> => {
+      if (!context.user) throw new AuthenticationError('User not authenticated');
 
       const user = await User.findById(context.user._id);
 
-      if (!user?.completedChallenges.includes(challengeId)) {
-        user.completedChallenges.push(challengeId);
+      if (!user) throw new Error('User not found');
+
+      const challengeObjectId = new Types.ObjectId(challengeId);
+
+      if (!user.completedChallenges.some((id: Types.ObjectId) => id.equals(challengeObjectId))) {
+        user.completedChallenges.push(challengeObjectId);
         await user.save();
       }
 
-      return user.populate('completedChallenges').populate('badges');
+      // Using `await user.populate()` (Mongoose 6+ style)
+      await (await user.populate('completedChallenges')).populate('badges');
+
+      return user as unknown as IUserDocument;
     },
   },
+}
 };
 
 export default resolvers;

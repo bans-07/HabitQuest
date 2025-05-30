@@ -1,6 +1,9 @@
 // Entry point for Express/GraphQL server setup
 import express from 'express';
 import './connection';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 
 const app = express();
