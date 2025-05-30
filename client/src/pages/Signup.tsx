@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const quotes = [
   "Build habits, build your future.",
@@ -10,9 +12,11 @@ const quotes = [
 
 const Signup: React.FC = () => {
   const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [quoteIndex, setQuoteIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,22 +28,20 @@ const Signup: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    let errorMessage = '';
-    if (!firstName.trim()) errorMessage += 'First name is required.\n';
-    if (!email.trim()) errorMessage += 'Email is required.\n';
-    if (!password.trim()) errorMessage += 'Password is required.\n';
-
-    if (errorMessage) {
-      alert(errorMessage);
+    if (!firstName.trim() || !lastName.trim() || !username.trim() || !password.trim()) {
+      alert('Please fill out all fields.');
       return;
     }
 
-    console.log('Signup:', { firstName, email, password });
+    console.log('Signup data:', { firstName, lastName, username, password });
+
+
+    navigate('/dashboard');
   };
 
   return (
     <div style={styles.pageWrapper}>
-      {/* Inline animation style block */}
+      {/* Animation keyframes inline */}
       <style>
         {`
           @keyframes scrollText {
@@ -62,10 +64,17 @@ const Signup: React.FC = () => {
             style={styles.input}
           />
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            style={styles.input}
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             style={styles.input}
           />
           <input
