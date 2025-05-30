@@ -1,10 +1,17 @@
 import express from 'express';
+<<<<<<< HEAD
+import './connection';
+import dotenv from 'dotenv';
+dotenv.config();
+
+=======
 import path from 'node:path';
 import type { Request, Response } from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authMiddleware } from './utils/auth.js';
+>>>>>>> origin/main
 
 const server = new ApolloServer({
   typeDefs,
