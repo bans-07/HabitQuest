@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const quotes = [
   "Stay consistent. Results will follow.",
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
         </form>
         <p style={styles.switchText}>
           Don&apos;t have an account?{' '}
-          <a href="/signup" style={styles.link}>Sign up here</a>
+          <Link to="/signup" style={styles.link}>Sign up here</Link>
         </p>
       </div>
 
