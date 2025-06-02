@@ -1,9 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "server.ts",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts,json --exec ts-node server.ts",
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "watch": "nodemon dist/server.js"
@@ -31,3 +31,4 @@
     "typescript": "^5.0.4"
   }
 }
+

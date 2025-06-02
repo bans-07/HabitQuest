@@ -11,6 +11,7 @@
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "build-server": "tsc -p server",
     "build-client": "npm --prefix client run build",
+    "install": "cd server && npm i && cd ../client && npm i",
     "install-all": "npm install --prefix client && npm install --prefix server"
   },
   "author": "",
