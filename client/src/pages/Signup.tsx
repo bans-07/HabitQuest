@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const quotes = [
@@ -88,7 +88,7 @@ const Signup: React.FC = () => {
         </form>
         <p style={styles.switchText}>
           Already have an account?{' '}
-          <a href="/login" style={styles.link}>Log in here</a>
+          <Link to="/login" style={styles.link}>Log in here</Link>
         </p>
       </div>
 
