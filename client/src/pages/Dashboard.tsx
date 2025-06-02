@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Challenge {
   id: number;
@@ -8,6 +9,7 @@ interface Challenge {
 }
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [newTitle, setNewTitle] = useState('');
   const [newCategory, setNewCategory] = useState('');
@@ -52,7 +54,8 @@ const Dashboard: React.FC = () => {
   };
 
   const handleLogout = () => {
-    window.location.href = '/login';
+    // Clear auth tokens or user state here if needed
+    navigate('/login');
   };
 
   const filteredChallenges = showCompleted
